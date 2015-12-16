@@ -18,6 +18,7 @@ workflows:
         - path: ./_tmp
         - is_create_path: true
     - path::./:
+        run_if: true
         inputs:
         - apk_path: "${BITRISE_APK_PATH}"
         - mapping_path: "${MAPPING_PATH}"
