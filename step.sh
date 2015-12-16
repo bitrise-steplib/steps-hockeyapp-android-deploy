@@ -23,7 +23,7 @@ fi
 # apk
 if [ ! -f "${apk_path}" ] ; then
   echo "# Error"
-  echo '* No apk found to deploy.'
+  echo "* No apk found to deploy. Provided path was: ${apk_path}"
   echoStatusFailed
   exit 1
 fi
