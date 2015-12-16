@@ -15,6 +15,8 @@ source_code_url: https://github.com/bitrise-io/steps-hockeyapp-android-deploy
 support_url: https://github.com/bitrise-io/steps-hockeyapp-android-deploy/issues
 host_os_tags:
   - ubuntu
+  - osx-10.9
+  - osx-10.10
 project_type_tags:
   - android
 type_tags:
