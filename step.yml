@@ -9,7 +9,7 @@ description: |-
   You also need to create a *HockeyApp Token* for your app.
 
   If app_id is provided the apk will be upload to the specified app on HockeyApp,
-  otherwise HockeyApp will decide based on the bundle id, if it's a new app, or update.
+  otherwise HockeyApp will decide based on the package ID, if it's a new app, or update.
 website: https://github.com/bitrise-io/steps-hockeyapp-android-deploy
 source_code_url: https://github.com/bitrise-io/steps-hockeyapp-android-deploy
 support_url: https://github.com/bitrise-io/steps-hockeyapp-android-deploy/issues
@@ -72,8 +72,8 @@ inputs:
       description: |-
         **Important:**
         *If no App ID is specified HockeyApp will attach the build
-        to an app on HockeyApp based on the bundle ID, or create a new app on HockeyApp
-        if it does not match any existing HockeyApp app's bundle ID.*
+        to an app on HockeyApp based on the package ID, or create a new app on HockeyApp
+        if it does not match any existing HockeyApp app's package ID.*
 
         *If you set the App ID the build will be uploaded for the specified
         HockeyApp app/project!*
