@@ -1,0 +1,26 @@
+{
+	"ImportPath": "github.com/bitrise-steplib/steps-hockeyapp-android-deploy",
+	"GoVersion": "go1.7",
+	"GodepVersion": "v74",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/bitrise-io/depman/pathutil",
+			"Rev": "4c59bc31f02a2ae78ce5d8d96a006289cd3e6beb"
+		},
+		{
+			"ImportPath": "github.com/bitrise-io/go-utils/cmdex",
+			"Rev": "1c148012aaf6c7ae16dad4570d70fd8cb4e78638"
+		},
+		{
+			"ImportPath": "github.com/bitrise-io/go-utils/errorutil",
+			"Rev": "1c148012aaf6c7ae16dad4570d70fd8cb4e78638"
+		},
+		{
+			"ImportPath": "github.com/bitrise-io/go-utils/pathutil",
+			"Rev": "1c148012aaf6c7ae16dad4570d70fd8cb4e78638"
+		}
+	]
+}
