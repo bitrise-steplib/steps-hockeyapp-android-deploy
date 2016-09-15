@@ -231,9 +231,9 @@ func main() {
 
 	request, err := createRequest(requestURL, fields, files)
 	if err != nil {
-		log.Error("Failed to create request, error: %#v", err)
+		log.Error("Failed to create request, error: %s", err)
 		if err := exportEnvironmentWithEnvman(hockeyAppDeployStatusKey, hockeyAppDeployStatusFailed); err != nil {
-			log.Warn("Failed to export %s, error: %#v", hockeyAppDeployStatusKey, err)
+			log.Warn("Failed to export %s, error: %s", hockeyAppDeployStatusKey, err)
 		}
 		os.Exit(1)
 	}
@@ -243,9 +243,9 @@ func main() {
 
 	response, err := client.Do(request)
 	if err != nil {
-		log.Error("Performing request failed, error: %#v", err)
+		log.Error("Performing request failed, error: %s", err)
 		if err := exportEnvironmentWithEnvman(hockeyAppDeployStatusKey, hockeyAppDeployStatusFailed); err != nil {
-			log.Warn("Failed to export %s, error: %#v", hockeyAppDeployStatusKey, err)
+			log.Warn("Failed to export %s, error: %s", hockeyAppDeployStatusKey, err)
 		}
 		os.Exit(1)
 	}
@@ -256,7 +256,7 @@ func main() {
 
 	if response.StatusCode < 200 || response.StatusCode > 300 {
 		if readErr != nil {
-			log.Warn("Failed to read response body, error: %#v", readErr)
+			log.Warn("Failed to read response body, error: %s", readErr)
 		} else {
 			fmt.Println()
 			log.Info("Response:")
@@ -266,7 +266,7 @@ func main() {
 
 		log.Error("Performing request failed, status code: %d", response.StatusCode)
 		if err := exportEnvironmentWithEnvman(hockeyAppDeployStatusKey, hockeyAppDeployStatusFailed); err != nil {
-			log.Warn("Failed to export %s, error: %#v", hockeyAppDeployStatusKey, err)
+			log.Warn("Failed to export %s, error: %s", hockeyAppDeployStatusKey, err)
 		}
 		os.Exit(1)
 	}
@@ -280,18 +280,18 @@ func main() {
 	log.Detail(" body: %s", contents)
 
 	if readErr != nil {
-		log.Error("Failed to read response body, error: %#v", readErr)
+		log.Error("Failed to read response body, error: %s", readErr)
 		if err := exportEnvironmentWithEnvman(hockeyAppDeployStatusKey, hockeyAppDeployStatusFailed); err != nil {
-			log.Warn("Failed to export %s, error: %#v", hockeyAppDeployStatusKey, err)
+			log.Warn("Failed to export %s, error: %s", hockeyAppDeployStatusKey, err)
 		}
 		os.Exit(1)
 	}
 
 	var responseModel ResponseModel
 	if err := json.Unmarshal([]byte(contents), &responseModel); err != nil {
-		log.Error("Failed to parse response body, error: %#v", err)
+		log.Error("Failed to parse response body, error: %s", err)
 		if err := exportEnvironmentWithEnvman(hockeyAppDeployStatusKey, hockeyAppDeployStatusFailed); err != nil {
-			log.Warn("Failed to export %s, error: %#v", hockeyAppDeployStatusKey, err)
+			log.Warn("Failed to export %s, error: %s", hockeyAppDeployStatusKey, err)
 		}
 		os.Exit(1)
 	}
@@ -308,18 +308,18 @@ func main() {
 	}
 
 	if err := exportEnvironmentWithEnvman(hockeyAppDeployStatusKey, hockeyAppDeployStatusSuccess); err != nil {
-		log.Warn("Failed to export %s, error: %#v", hockeyAppDeployStatusKey, err)
+		log.Warn("Failed to export %s, error: %s", hockeyAppDeployStatusKey, err)
 	}
 
 	if err := exportEnvironmentWithEnvman(hockeyAppDeployPublicURLKey, responseModel.PublicURL); err != nil {
-		log.Warn("Failed to export %s, error: %#v", hockeyAppDeployPublicURLKey, err)
+		log.Warn("Failed to export %s, error: %s", hockeyAppDeployPublicURLKey, err)
 	}
 
 	if err := exportEnvironmentWithEnvman(hockeyAppDeployBuildURLKey, responseModel.BuildURL); err != nil {
-		log.Warn("Failed to export %s, error: %#v", hockeyAppDeployBuildURLKey, err)
+		log.Warn("Failed to export %s, error: %s", hockeyAppDeployBuildURLKey, err)
 	}
 
 	if err := exportEnvironmentWithEnvman(hockeyAppDeployConfigURLKey, responseModel.ConfigURL); err != nil {
-		log.Warn("Failed to export %s, error: %#v", hockeyAppDeployConfigURLKey, err)
+		log.Warn("Failed to export %s, error: %s", hockeyAppDeployConfigURLKey, err)
 	}
 }
