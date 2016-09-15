@@ -14,7 +14,7 @@ import (
 
 	"github.com/bitrise-io/depman/pathutil"
 	"github.com/bitrise-io/go-utils/cmdex"
-	log "github.com/bitrise-steplib/steps-hockeyapp-android-deploy/logger"
+	"github.com/bitrise-io/go-utils/log"
 )
 
 // -----------------------
@@ -71,20 +71,21 @@ func createConfigsModelFromEnvs() ConfigsModel {
 }
 
 func (configs ConfigsModel) print() {
+	fmt.Println()
 	log.Info("Configs:")
-	log.Detail("- ApkPath: %s", configs.ApkPath)
-	log.Detail("- MappingPath: %s", configs.MappingPath)
-	log.Detail("- APIToken: %s", configs.APIToken)
-	log.Detail("- AppID: %s", configs.AppID)
-	log.Detail("- Notes: %s", configs.Notes)
-	log.Detail("- NotesType: %s", configs.NotesType)
-	log.Detail("- Notify: %s", configs.Notify)
-	log.Detail("- Status: %s", configs.Status)
-	log.Detail("- Tags: %s", configs.Tags)
-	log.Detail("- CommitSHA: %s", configs.CommitSHA)
-	log.Detail("- BuildServerURL: %s", configs.BuildServerURL)
-	log.Detail("- RepositoryURL: %s", configs.RepositoryURL)
-	log.Detail("- Mandatory: %s", configs.Mandatory)
+	log.Detail(" - ApkPath: %s", configs.ApkPath)
+	log.Detail(" - MappingPath: %s", configs.MappingPath)
+	log.Detail(" - APIToken: %s", configs.APIToken)
+	log.Detail(" - AppID: %s", configs.AppID)
+	log.Detail(" - Notes: %s", configs.Notes)
+	log.Detail(" - NotesType: %s", configs.NotesType)
+	log.Detail(" - Notify: %s", configs.Notify)
+	log.Detail(" - Status: %s", configs.Status)
+	log.Detail(" - Tags: %s", configs.Tags)
+	log.Detail(" - CommitSHA: %s", configs.CommitSHA)
+	log.Detail(" - BuildServerURL: %s", configs.BuildServerURL)
+	log.Detail(" - RepositoryURL: %s", configs.RepositoryURL)
+	log.Detail(" - Mandatory: %s", configs.Mandatory)
 }
 
 func (configs ConfigsModel) validate() error {
@@ -189,7 +190,8 @@ func main() {
 	configs := createConfigsModelFromEnvs()
 	configs.print()
 	if err := configs.validate(); err != nil {
-		log.Fail("Issue with input: %s", err)
+		log.Error("Issue with input: %s", err)
+		os.Exit(1)
 	}
 
 	if configs.Mandatory == "1" || configs.Mandatory == "true" {
@@ -200,6 +202,7 @@ func main() {
 
 	//
 	// Create request
+	fmt.Println()
 	log.Info("Performing request")
 
 	requestURL := "https://rink.hockeyapp.net/api/2/apps/upload"
@@ -228,11 +231,11 @@ func main() {
 
 	request, err := createRequest(requestURL, fields, files)
 	if err != nil {
+		log.Error("Failed to create request, error: %#v", err)
 		if err := exportEnvironmentWithEnvman(hockeyAppDeployStatusKey, hockeyAppDeployStatusFailed); err != nil {
-			log.Error("Failed to export %s, error: %#v", hockeyAppDeployStatusKey, err)
+			log.Warn("Failed to export %s, error: %#v", hockeyAppDeployStatusKey, err)
 		}
-
-		log.Fail("Failed to create request, error: %#v", err)
+		os.Exit(1)
 	}
 	request.Header.Add("X-HockeyAppToken", configs.APIToken)
 
@@ -240,11 +243,11 @@ func main() {
 
 	response, err := client.Do(request)
 	if err != nil {
+		log.Error("Performing request failed, error: %#v", err)
 		if err := exportEnvironmentWithEnvman(hockeyAppDeployStatusKey, hockeyAppDeployStatusFailed); err != nil {
-			log.Error("Failed to export %s, error: %#v", hockeyAppDeployStatusKey, err)
+			log.Warn("Failed to export %s, error: %#v", hockeyAppDeployStatusKey, err)
 		}
-
-		log.Fail("Performing request failed, error: %#v", err)
+		os.Exit(1)
 	}
 
 	defer response.Body.Close()
@@ -255,40 +258,42 @@ func main() {
 		if readErr != nil {
 			log.Warn("Failed to read response body, error: %#v", readErr)
 		} else {
+			fmt.Println()
 			log.Info("Response:")
-			log.Detail("status code: %d", response.StatusCode)
-			log.Detail("body: %s", string(contents))
+			log.Detail(" status code: %d", response.StatusCode)
+			log.Detail(" body: %s", string(contents))
 		}
 
+		log.Error("Performing request failed, status code: %d", response.StatusCode)
 		if err := exportEnvironmentWithEnvman(hockeyAppDeployStatusKey, hockeyAppDeployStatusFailed); err != nil {
-			log.Error("Failed to export %s, error: %#v", hockeyAppDeployStatusKey, err)
+			log.Warn("Failed to export %s, error: %#v", hockeyAppDeployStatusKey, err)
 		}
-
-		log.Fail("Performing request failed, status code: %d", response.StatusCode)
+		os.Exit(1)
 	}
 
 	// Success
 	log.Done("Request succed")
 
+	fmt.Println()
 	log.Info("Response:")
-	log.Detail("status code: %d", response.StatusCode)
-	log.Detail("body: %s", contents)
+	log.Detail(" status code: %d", response.StatusCode)
+	log.Detail(" body: %s", contents)
 
 	if readErr != nil {
+		log.Error("Failed to read response body, error: %#v", readErr)
 		if err := exportEnvironmentWithEnvman(hockeyAppDeployStatusKey, hockeyAppDeployStatusFailed); err != nil {
-			log.Error("Failed to export %s, error: %#v", hockeyAppDeployStatusKey, err)
+			log.Warn("Failed to export %s, error: %#v", hockeyAppDeployStatusKey, err)
 		}
-
-		log.Fail("Failed to read response body, error: %#v", readErr)
+		os.Exit(1)
 	}
 
 	var responseModel ResponseModel
 	if err := json.Unmarshal([]byte(contents), &responseModel); err != nil {
+		log.Error("Failed to parse response body, error: %#v", err)
 		if err := exportEnvironmentWithEnvman(hockeyAppDeployStatusKey, hockeyAppDeployStatusFailed); err != nil {
-			log.Error("Failed to export %s, error: %#v", hockeyAppDeployStatusKey, err)
+			log.Warn("Failed to export %s, error: %#v", hockeyAppDeployStatusKey, err)
 		}
-
-		log.Fail("Failed to parse response body, error: %#v", err)
+		os.Exit(1)
 	}
 
 	fmt.Println()
@@ -303,18 +308,18 @@ func main() {
 	}
 
 	if err := exportEnvironmentWithEnvman(hockeyAppDeployStatusKey, hockeyAppDeployStatusSuccess); err != nil {
-		log.Fail("Failed to export %s, error: %#v", hockeyAppDeployStatusKey, err)
+		log.Warn("Failed to export %s, error: %#v", hockeyAppDeployStatusKey, err)
 	}
 
 	if err := exportEnvironmentWithEnvman(hockeyAppDeployPublicURLKey, responseModel.PublicURL); err != nil {
-		log.Fail("Failed to export %s, error: %#v", hockeyAppDeployPublicURLKey, err)
+		log.Warn("Failed to export %s, error: %#v", hockeyAppDeployPublicURLKey, err)
 	}
 
 	if err := exportEnvironmentWithEnvman(hockeyAppDeployBuildURLKey, responseModel.BuildURL); err != nil {
-		log.Fail("Failed to export %s, error: %#v", hockeyAppDeployBuildURLKey, err)
+		log.Warn("Failed to export %s, error: %#v", hockeyAppDeployBuildURLKey, err)
 	}
 
 	if err := exportEnvironmentWithEnvman(hockeyAppDeployConfigURLKey, responseModel.ConfigURL); err != nil {
-		log.Fail("Failed to export %s, error: %#v", hockeyAppDeployConfigURLKey, err)
+		log.Warn("Failed to export %s, error: %#v", hockeyAppDeployConfigURLKey, err)
 	}
 }

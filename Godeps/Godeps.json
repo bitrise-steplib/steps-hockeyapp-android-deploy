@@ -12,15 +12,23 @@
 		},
 		{
 			"ImportPath": "github.com/bitrise-io/go-utils/cmdex",
-			"Rev": "1c148012aaf6c7ae16dad4570d70fd8cb4e78638"
+			"Rev": "5422c5893198ce5ca5d872179ebacaafa2013bc6"
+		},
+		{
+			"ImportPath": "github.com/bitrise-io/go-utils/colorstring",
+			"Rev": "5422c5893198ce5ca5d872179ebacaafa2013bc6"
 		},
 		{
 			"ImportPath": "github.com/bitrise-io/go-utils/errorutil",
-			"Rev": "1c148012aaf6c7ae16dad4570d70fd8cb4e78638"
+			"Rev": "5422c5893198ce5ca5d872179ebacaafa2013bc6"
+		},
+		{
+			"ImportPath": "github.com/bitrise-io/go-utils/log",
+			"Rev": "5422c5893198ce5ca5d872179ebacaafa2013bc6"
 		},
 		{
 			"ImportPath": "github.com/bitrise-io/go-utils/pathutil",
-			"Rev": "1c148012aaf6c7ae16dad4570d70fd8cb4e78638"
+			"Rev": "5422c5893198ce5ca5d872179ebacaafa2013bc6"
 		}
 	]
 }
