@@ -25,25 +25,28 @@ type_tags:
 is_requires_admin_user: false
 is_always_run: false
 is_skippable: false
-dependencies: []
 run_if: ".IsCI"
+deps:
+  brew:
+  - name: go
+  apt_get:
+  - name: golang
+    bin_name: go
+toolkit:
+  go:
+    package_name: github.com/bitrise-steplib/steps-hockeyapp-android-deploy
 inputs:
   - apk_path: "$BITRISE_APK_PATH"
     opts:
       title: "apk file path"
       summary: ""
       description: ""
-      is_expand: true
       is_required: true
-      is_dont_change_value: false
   - mapping_path:
     opts:
       title: "mapping.txt file path"
       summary: ""
       description: ""
-      is_expand: true
-      is_required: false
-      is_dont_change_value: false
   - api_token: ""
     opts:
       title: "API Token"
@@ -62,9 +65,7 @@ inputs:
         You can see your registered API Tokens at the bottom of this page
         at the *Active API Tokens* section. Copy and paste here the API Token
         you want to use.
-      is_expand: true
       is_required: true
-      is_dont_change_value: false
   - app_id: ""
     opts:
       title: "HockeyApp: App ID"
@@ -86,18 +87,12 @@ inputs:
         Once the app is registered select it from the Apps list on the
         Dashboard page and on the left side you'll find the **App ID**
         of the app. Copy and paste it here.
-      is_expand: true
-      is_required: false
-      is_dont_change_value: false
   - notes: "Deploy with Bitrise HockeyApp Deploy Step."
     opts:
       title: "Notes attached to the deploy"
       summary: ""
       description: |-
         Additional notes to the deploy.
-      is_expand: true
-      is_required: false
-      is_dont_change_value: false
   - notes_type: "0"
     opts:
       title: Notes type
@@ -108,9 +103,7 @@ inputs:
         * 0: Textile
         * 1: Markdown
       value_options: ["0", "1"]
-      is_expand: true
       is_required: true
-      is_dont_change_value: false
   - notify: "2"
     opts:
       title: "Notify Testers?"
@@ -125,9 +118,7 @@ inputs:
         * 1 - Notify all testers that can install this app
         * 2 - Notify all testers
       value_options: ["0", "1", "2"]
-      is_expand: true
       is_required: true
-      is_dont_change_value: false
   - status: "2"
     opts:
       title: "Allow Download?"
@@ -142,9 +133,7 @@ inputs:
         * 1 - do not allow users to download the version
         * 2 - make the version available for download.
       value_options: ["1", "2"]
-      is_expand: true
       is_required: true
-      is_dont_change_value: false
   - mandatory: "false"
     opts:
       title: "Mandatory?"
@@ -152,42 +141,28 @@ inputs:
       description: |
         Set if version is mandatory to install.
       value_options: ["true", "false"]
-      is_expand: true
       is_required: true
-      is_dont_change_value: false
   - tags: ""
     opts:
       title: "(optional) Restrict download: Tags"
       summary: ""
       description: |
         Restrict download to comma-separated list of tags.
-      is_expand: true
-      is_required: false
-      is_dont_change_value: false
   - commit_sha: "$BITRISE_GIT_COMMIT"
     opts:
       title: "(optional) Git commit sha for this build"
       summary: ""
       description: ""
-      is_expand: true
-      is_required: false
-      is_dont_change_value: false
   - build_server_url: "$BITRISE_BUILD_URL"
     opts:
       title: "(optional) Build job URL (on your build server)"
       summary: ""
       description: ""
-      is_expand: true
-      is_required: false
-      is_dont_change_value: false
   - repository_url: ""
     opts:
       title: "(optional) Source Code Repository URL"
       summary: ""
       description: ""
-      is_expand: true
-      is_required: false
-      is_dont_change_value: false
 outputs:
   - HOCKEYAPP_DEPLOY_STATUS: ""
     opts:
