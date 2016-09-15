@@ -25,9 +25,10 @@ const (
 	hockeyAppDeployStatusKey     = "HOCKEYAPP_DEPLOY_STATUS"
 	hockeyAppDeployStatusSuccess = "success"
 	hockeyAppDeployStatusFailed  = "failed"
-	hockeyAppDeployPublicURLKey  = "HOCKEYAPP_DEPLOY_PUBLIC_URL"
-	hockeyAppDeployBuildURLKey   = "HOCKEYAPP_DEPLOY_BUILD_URL"
-	hockeyAppDeployConfigURLKey  = "HOCKEYAPP_DEPLOY_CONFIG_URL"
+
+	hockeyAppDeployPublicURLKey = "HOCKEYAPP_DEPLOY_PUBLIC_URL"
+	hockeyAppDeployBuildURLKey  = "HOCKEYAPP_DEPLOY_BUILD_URL"
+	hockeyAppDeployConfigURLKey = "HOCKEYAPP_DEPLOY_CONFIG_URL"
 )
 
 // -----------------------
@@ -227,6 +228,10 @@ func main() {
 
 	request, err := createRequest(requestURL, fields, files)
 	if err != nil {
+		if err := exportEnvironmentWithEnvman(hockeyAppDeployStatusKey, hockeyAppDeployStatusFailed); err != nil {
+			log.Error("Failed to export %s, error: %#v", hockeyAppDeployStatusKey, err)
+		}
+
 		log.Fail("Failed to create request, error: %#v", err)
 	}
 	request.Header.Add("X-HockeyAppToken", configs.APIToken)
@@ -235,6 +240,10 @@ func main() {
 
 	response, err := client.Do(request)
 	if err != nil {
+		if err := exportEnvironmentWithEnvman(hockeyAppDeployStatusKey, hockeyAppDeployStatusFailed); err != nil {
+			log.Error("Failed to export %s, error: %#v", hockeyAppDeployStatusKey, err)
+		}
+
 		log.Fail("Performing request failed, error: %#v", err)
 	}
 
@@ -250,6 +259,11 @@ func main() {
 			log.Detail("status code: %d", response.StatusCode)
 			log.Detail("body: %s", string(contents))
 		}
+
+		if err := exportEnvironmentWithEnvman(hockeyAppDeployStatusKey, hockeyAppDeployStatusFailed); err != nil {
+			log.Error("Failed to export %s, error: %#v", hockeyAppDeployStatusKey, err)
+		}
+
 		log.Fail("Performing request failed, status code: %d", response.StatusCode)
 	}
 
@@ -261,11 +275,19 @@ func main() {
 	log.Detail("body: %s", contents)
 
 	if readErr != nil {
+		if err := exportEnvironmentWithEnvman(hockeyAppDeployStatusKey, hockeyAppDeployStatusFailed); err != nil {
+			log.Error("Failed to export %s, error: %#v", hockeyAppDeployStatusKey, err)
+		}
+
 		log.Fail("Failed to read response body, error: %#v", readErr)
 	}
 
 	var responseModel ResponseModel
 	if err := json.Unmarshal([]byte(contents), &responseModel); err != nil {
+		if err := exportEnvironmentWithEnvman(hockeyAppDeployStatusKey, hockeyAppDeployStatusFailed); err != nil {
+			log.Error("Failed to export %s, error: %#v", hockeyAppDeployStatusKey, err)
+		}
+
 		log.Fail("Failed to parse response body, error: %#v", err)
 	}
 
