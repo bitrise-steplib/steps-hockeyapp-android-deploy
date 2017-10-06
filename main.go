@@ -272,7 +272,7 @@ func main() {
 	}
 
 	// Success
-	log.Done("Request succed")
+	log.Done("Request succeeded")
 
 	fmt.Println()
 	log.Info("Response:")
