@@ -1,6 +1,12 @@
-## Changelog (Current version: 1.1.0)
+## Changelog (Current version: 1.1.2)
 
 -----------------
+
+### 1.1.2 (2017 Oct 09)
+
+* [f95d1b3] Prepare for 1.1.2
+* [9c10ebf] Fix typo (#8)
+* [a487be2] RELEASE_VERSION: 1.1.1
 
 ### 1.1.0 (2016 Sep 15)
 
@@ -30,4 +36,4 @@
 
 -----------------
 
-Updated: 2016 Sep 15
+Updated: 2017 Oct 09
