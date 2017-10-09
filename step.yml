@@ -21,7 +21,10 @@ project_type_tags:
   - android
 type_tags:
   - deploy
-  - HockeyApp
+  - xamarin
+  - cordova
+  - ionic
+  - react-native
 is_requires_admin_user: false
 is_always_run: false
 is_skippable: false
