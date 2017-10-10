@@ -1,6 +1,11 @@
-## Changelog (Current version: 1.1.2)
+## Changelog (Current version: 1.1.3)
 
 -----------------
+
+### 1.1.3 (2017 Oct 10)
+
+* [9a1e044] Prepare for 1.1.3
+* [dca09ae] added project type tags
 
 ### 1.1.2 (2017 Oct 09)
 
@@ -36,4 +41,4 @@
 
 -----------------
 
-Updated: 2017 Oct 09
+Updated: 2017 Oct 10
