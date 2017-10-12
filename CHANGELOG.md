@@ -1,6 +1,10 @@
-## Changelog (Current version: 1.1.3)
+## Changelog (Current version: 1.1.4)
 
 -----------------
+
+### 1.1.4 (2017 Oct 12)
+
+* [c923b8c] Prepare for 1.1.4
 
 ### 1.1.3 (2017 Oct 10)
 
@@ -41,4 +45,4 @@
 
 -----------------
 
-Updated: 2017 Oct 10
+Updated: 2017 Oct 12
