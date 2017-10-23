@@ -35,6 +35,10 @@ workflows:
             echo "HOCKEYAPP_DEPLOY_PUBLIC_URL: ${HOCKEYAPP_DEPLOY_PUBLIC_URL}"
             echo "HOCKEYAPP_DEPLOY_BUILD_URL: ${HOCKEYAPP_DEPLOY_BUILD_URL}"
             echo "HOCKEYAPP_DEPLOY_CONFIG_URL: ${HOCKEYAPP_DEPLOY_CONFIG_URL}"
+            echo
+            echo "HOCKEYAPP_DEPLOY_PUBLIC_URL_LIST: ${HOCKEYAPP_DEPLOY_PUBLIC_URL_LIST}"
+            echo "HOCKEYAPP_DEPLOY_BUILD_URL_LIST: ${HOCKEYAPP_DEPLOY_BUILD_URL_LIST}"
+            echo "HOCKEYAPP_DEPLOY_CONFIG_URL_LIST: ${HOCKEYAPP_DEPLOY_CONFIG_URL_LIST}"
 
   # ----------------------------------------------------------------
   # --- workflows to create Release
