@@ -7,13 +7,48 @@ app:
 
   # define these in your .bitrise.secrets.yml
   - BITRISE_APK_PATH: $BITRISE_APK_PATH
+  - BITRISE_APK_PATH_LIST: $BITRISE_APK_PATH_LIST
   - MAPPING_PATH: $MAPPING_PATH
   - API_TOKEN: $API_TOKEN
   - APP_ID: $APP_ID
+  - IS_USE_APK_PATH_LIST: $IS_USE_APK_PATH_LIST
 
 workflows:
   test:
     steps:
+    - script:
+        title: Install testing tools
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            set -ex
+            # Check for unhandled errors
+            go get -u -v github.com/kisielk/errcheck
+            # Go lint
+            go get -u -v github.com/golang/lint/golint
+    - script:
+        title: Err check
+        inputs:
+        - content: errcheck -asserts=true -blank=true $GOLIST_WITHOUT_VENDOR
+    - script:
+        title: Go lint
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            set -e
+            while read -r line; do
+              echo "-> Linting: $line"
+              golint_out="$(golint $line)"
+              if [[ "${golint_out}" != "" ]] ; then
+                echo "=> Golint issues found:"
+                echo "${golint_out}"
+                exit 1
+              fi
+            done <<< "$GOLIST_WITHOUT_VENDOR"
+    - script:
+        title: Go test
+        inputs:
+        - content: go test
     - change-workdir:
         run_if: true
         inputs:
@@ -22,7 +57,9 @@ workflows:
     - path::./:
         run_if: true
         inputs:
+        - is_use_apk_path_list: "${IS_USE_APK_PATH_LIST}"
         - apk_path: "${BITRISE_APK_PATH}"
+        - apk_path_list: "${BITRISE_APK_PATH_LIST}"
         - mapping_path: "${MAPPING_PATH}"
         - api_token: "${API_TOKEN}"
         - app_id: "${APP_ID}"
@@ -35,6 +72,10 @@ workflows:
             echo "HOCKEYAPP_DEPLOY_PUBLIC_URL: ${HOCKEYAPP_DEPLOY_PUBLIC_URL}"
             echo "HOCKEYAPP_DEPLOY_BUILD_URL: ${HOCKEYAPP_DEPLOY_BUILD_URL}"
             echo "HOCKEYAPP_DEPLOY_CONFIG_URL: ${HOCKEYAPP_DEPLOY_CONFIG_URL}"
+            echo
+            echo "HOCKEYAPP_DEPLOY_PUBLIC_URL_LIST: ${HOCKEYAPP_DEPLOY_PUBLIC_URL_LIST}"
+            echo "HOCKEYAPP_DEPLOY_BUILD_URL_LIST: ${HOCKEYAPP_DEPLOY_BUILD_URL_LIST}"
+            echo "HOCKEYAPP_DEPLOY_CONFIG_URL_LIST: ${HOCKEYAPP_DEPLOY_CONFIG_URL_LIST}"
 
   # ----------------------------------------------------------------
   # --- workflows to create Release

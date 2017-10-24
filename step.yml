@@ -8,8 +8,11 @@ description: |-
   and create an app to utilize this step.
   You also need to create a *HockeyApp Token* for your app.
 
-  If app_id is provided the apk will be upload to the specified app on HockeyApp,
+  If `app_id` is provided the apk will be upload to the specified app on HockeyApp,
   otherwise HockeyApp will decide based on the package ID, if it's a new app, or update.
+
+  If `is_use_apk_path_list` is enabled then more than one APK can be deployed. Useful especially
+  when splits are used.
 website: https://github.com/bitrise-io/steps-hockeyapp-android-deploy
 source_code_url: https://github.com/bitrise-io/steps-hockeyapp-android-deploy
 support_url: https://github.com/bitrise-io/steps-hockeyapp-android-deploy/issues
@@ -39,12 +42,29 @@ toolkit:
   go:
     package_name: github.com/bitrise-steplib/steps-hockeyapp-android-deploy
 inputs:
+  - is_use_apk_path_list: "false"
+    opts:
+      title: "Use APK path list instead of single APK"
+      summary: "If enabled `apk_path_list` is used instead of `apk_path`"
+      description: |-
+        With this option enabled you can deploy multiple APKs at once. All of them will belong the same application on HockeyApp.
+      is_required: true
+      value_options:
+      - "true"
+      - "false"
   - apk_path: "$BITRISE_APK_PATH"
     opts:
-      title: "apk file path"
+      title: "APK file path"
       summary: ""
-      description: ""
-      is_required: true
+      description: |-
+        Meaningful only if input `is_use_apk_path_list` is unset. If so, `apk_path_list` is ignored.
+  - apk_path_list: "$BITRISE_APK_PATH_LIST"
+    opts:
+      title: "List of the APK paths"
+      summary: ""
+      description: |-
+        The paths have to be separated with `|` character.
+        Meaningful only if input `is_use_apk_path_list` is set. If so, `apk_path` is ignored.
   - mapping_path:
     opts:
       title: "mapping.txt file path"
@@ -176,14 +196,29 @@ outputs:
     opts:
       title: "Public URL of the newly deployed version"
       summary: ""
-      description: ""
+      description: "If there are more than one uploads, this variable will contain the first public URL."
   - HOCKEYAPP_DEPLOY_BUILD_URL: ""
     opts:
       title: "URL of the HockeyApp build"
       summary: ""
-      description: ""
+      description: "If there are more than one uploads, this variable will contain the first build URL."
   - HOCKEYAPP_DEPLOY_CONFIG_URL: ""
     opts:
       title: "URL of the HockeyApp config view"
       summary: ""
-      description: ""
+      description: "If there are more than one uploads, this variable will contain the first config view URL."
+  - HOCKEYAPP_DEPLOY_PUBLIC_URL:_LIST: ""
+    opts:
+      title: "List of the public URLs of the newly deployed version"
+      summary: ""
+      description: "The URLs are separated with `|` character."
+  - HOCKEYAPP_DEPLOY_BUILD_URL_LIST: ""
+    opts:
+      title: "List of the URLs of the HockeyApp build"
+      summary: ""
+      description: "The URLs are separated with `|` character."
+  - HOCKEYAPP_DEPLOY_CONFIG_URL_LIST: ""
+    opts:
+      title: "List of the URLs of the HockeyApp config view"
+      summary: ""
+      description: "The URLs are separated with `|` character."
