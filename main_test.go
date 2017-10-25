@@ -76,7 +76,6 @@ func TestExportSingleValue(t *testing.T) {
 
 	require.Contains(t, environment, "SAMPLE_KEY")
 	require.Contains(t, environment, "sample value")
-	require.NoError(t, os.Remove(envstore))
 }
 
 func TestExportMultipleValues(t *testing.T) {
