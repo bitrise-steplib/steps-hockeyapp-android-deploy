@@ -65,7 +65,7 @@ inputs:
       description: |-
         The paths have to be separated with `|` character.
         Meaningful only if input `is_use_apk_path_list` is set. If so, `apk_path` is ignored.
-  - mapping_path:
+  - mapping_path: "$BITRISE_MAPPING_PATH"
     opts:
       title: "mapping.txt file path"
       summary: ""
