@@ -207,7 +207,7 @@ outputs:
       title: "URL of the HockeyApp config view"
       summary: ""
       description: "If there are more than one uploads, this variable will contain the first config view URL."
-  - HOCKEYAPP_DEPLOY_PUBLIC_URL:_LIST: ""
+  - HOCKEYAPP_DEPLOY_PUBLIC_URL_LIST: ""
     opts:
       title: "List of the public URLs of the newly deployed version"
       summary: ""
