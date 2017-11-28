@@ -107,10 +107,16 @@ func (configs ConfigsModel) validate() error {
 		}
 	}
 
-	required := []string{configs.APIToken, configs.NotesType, configs.Notify, configs.Status, configs.Mandatory}
-	for _, config := range required {
-		if config == "" {
-			return fmt.Errorf("no %s parameter specified", config)
+	required := map[string]string{
+		"APIToken":  configs.APIToken,
+		"NotesType": configs.NotesType,
+		"Notify":    configs.Notify,
+		"Status":    configs.Status,
+		"Mandatory": configs.Mandatory,
+	}
+	for k, v := range required {
+		if v == "" {
+			return fmt.Errorf("no %s parameter specified", k)
 		}
 	}
 
