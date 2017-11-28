@@ -2,36 +2,33 @@ package log
 
 import (
 	"fmt"
-
-	"github.com/bitrise-io/go-utils/colorstring"
+	"io"
+	"os"
+	"time"
 )
 
-// Error ...
-func Error(format string, v ...interface{}) {
-	message := fmt.Sprintf(format, v...)
-	fmt.Println(colorstring.Red(message))
+var outWriter io.Writer = os.Stdout
+
+// SetOutWriter ...
+func SetOutWriter(writer io.Writer) {
+	outWriter = writer
 }
 
-// Warn ...
-func Warn(format string, v ...interface{}) {
-	message := fmt.Sprintf(format, v...)
-	fmt.Println(colorstring.Yellow(message))
+var enableDebugLog = false
+
+// SetEnableDebugLog ...
+func SetEnableDebugLog(enable bool) {
+	enableDebugLog = enable
 }
 
-// Info ...
-func Info(format string, v ...interface{}) {
-	message := fmt.Sprintf(format, v...)
-	fmt.Println(colorstring.Blue(message))
+var timestampLayout = "15:04:05"
+
+// SetTimestampLayout ...
+func SetTimestampLayout(layout string) {
+	timestampLayout = layout
 }
 
-// Detail ...
-func Detail(format string, v ...interface{}) {
-	message := fmt.Sprintf(format, v...)
-	fmt.Println(message)
-}
-
-// Done ...
-func Done(format string, v ...interface{}) {
-	message := fmt.Sprintf(format, v...)
-	fmt.Println(colorstring.Green(message))
+func timestampField() string {
+	currentTime := time.Now()
+	return fmt.Sprintf("[%s]", currentTime.Format(timestampLayout))
 }

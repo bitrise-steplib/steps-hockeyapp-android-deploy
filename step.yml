@@ -187,3 +187,21 @@ outputs:
       title: "URL of the HockeyApp config view"
       summary: ""
       description: ""
+  - HOCKEYAPP_DEPLOY_PUBLIC_URL_LIST: ""
+    opts:
+      title: "List of Public URLs of the newly deployed version"
+      summary: ""
+      description: |-
+        The urls are separated with `|` character, eg: `https://rink.hockeyapp.net/url/id1|https://rink.hockeyapp.net/url/id2`
+  - HOCKEYAPP_DEPLOY_BUILD_URL_LIST: ""
+    opts:
+      title: "List of HockeyApp build URLs"
+      summary: ""
+      description: |-
+        The urls are separated with `|` character, eg: `https://rink.hockeyapp.net/url/id1|https://rink.hockeyapp.net/url/id2`
+  - HOCKEYAPP_DEPLOY_CONFIG_URL_LIST: ""
+    opts:
+      title: "List of HockeyApp config view URLs"
+      summary: ""
+      description: |-
+        The urls are separated with `|` character, eg: `https://rink.hockeyapp.net/url/id1|https://rink.hockeyapp.net/url/id2`
