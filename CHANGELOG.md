@@ -1,6 +1,11 @@
-## Changelog (Current version: 1.1.4)
+## Changelog (Current version: 1.2.0)
 
 -----------------
+
+### 1.2.0 (2017 Dec 04)
+
+* [da08649] Bump version to 1.2.0
+* [312e23b] Support deploying multiple APKs (#11)
 
 ### 1.1.4 (2017 Oct 12)
 
@@ -45,4 +50,4 @@
 
 -----------------
 
-Updated: 2017 Oct 12
+Updated: 2017 Dec 04
