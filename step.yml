@@ -41,7 +41,7 @@ toolkit:
 inputs:
   - apk_path: "$BITRISE_APK_PATH"
     opts:
-      title: "apk file path"
+      title: "apk file path(s)"
       summary: ""
       description: |-
         Path to the APK to deploy.
