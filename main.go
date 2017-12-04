@@ -59,8 +59,15 @@ func createConfigsModelFromEnvs() ConfigsModel {
 		mandatory = "0"
 	}
 
+	apkPath := []string{}
+	for _, pth := range strings.Split(os.Getenv("apk_path"), "|") {
+		if pth != "" {
+			apkPath = append(apkPath, pth)
+		}
+	}
+
 	return ConfigsModel{
-		ApkPath:        strings.Split(os.Getenv("apk_path"), "|"),
+		ApkPath:        apkPath,
 		MappingPath:    os.Getenv("mapping_path"),
 		APIToken:       os.Getenv("api_token"),
 		AppID:          os.Getenv("app_id"),
