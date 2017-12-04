@@ -43,7 +43,8 @@ inputs:
     opts:
       title: "apk file path"
       summary: ""
-      description: ""
+      description: |-
+        The paths are separated with `|` character, eg: `app-armeabi-v7a-debug.apk|app-mips-debug.apk|app-x86-debug.apk`
       is_required: true
   - mapping_path:
     opts:
