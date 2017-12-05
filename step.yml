@@ -52,6 +52,7 @@ inputs:
 
         - `/path/to/my/app.apk`
         - `/path/to/my/app1.apk|/path/to/my/app2.apk|/path/to/my/app3.apk`
+        - `"$BITRISE_APK_PATH_LIST"`
       is_required: true
   - mapping_path:
     opts:
