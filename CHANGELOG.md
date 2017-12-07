@@ -1,6 +1,11 @@
-## Changelog (Current version: 1.2.0)
+## Changelog (Current version: 1.2.1)
 
 -----------------
+
+### 1.2.1 (2017 Dec 07)
+
+* [a209447] Bump version to 1.2.1
+* [c869f2d] Add description that there can be multiple paths (#12)
 
 ### 1.2.0 (2017 Dec 04)
 
@@ -50,4 +55,4 @@
 
 -----------------
 
-Updated: 2017 Dec 04
+Updated: 2017 Dec 07
