@@ -41,10 +41,18 @@ toolkit:
 inputs:
   - apk_path: "$BITRISE_APK_PATH"
     opts:
-      title: "apk file path"
+      title: "apk file path(s)"
       summary: ""
       description: |-
-        The paths are separated with `|` character, eg: `app-armeabi-v7a-debug.apk|app-mips-debug.apk|app-x86-debug.apk`
+        Path to the APK to deploy.
+
+        You can provide multiple APK paths separated by `|` character.
+
+        Format examples:
+
+        - `/path/to/my/app.apk`
+        - `/path/to/my/app1.apk|/path/to/my/app2.apk|/path/to/my/app3.apk`
+        - `"$BITRISE_APK_PATH_LIST"`
       is_required: true
   - mapping_path:
     opts:
