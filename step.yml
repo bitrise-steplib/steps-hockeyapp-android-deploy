@@ -111,7 +111,7 @@ inputs:
       description: |-
         Possible values:
 
-        * 0: Textile
+        * 0: Textfile
         * 1: Markdown
       value_options: ["0", "1"]
       is_required: true
