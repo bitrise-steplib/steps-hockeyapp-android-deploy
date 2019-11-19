@@ -271,6 +271,8 @@ func main() {
 		os.Exit(1)
 	}
 
+	log.Warnf("This step is deprecated as HockeyApp is shutting down, see https://www.hockeyapp.net/blog/2019/11/16/hockeyApp-is-being-retired.html.")
+
 	configURLs := []string{}
 	buildURLs := []string{}
 	publicURLs := []string{}
